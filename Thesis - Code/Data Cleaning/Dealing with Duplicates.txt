@@ -1,0 +1,5 @@
+
+"This post explores a few of these NLP and ML techniques, like text pre-processing, embedding, logistic regression, gradient-boosted machine, and neural networks."
+https://medium.springboard.com/identifying-duplicate-questions-a-machine-learning-case-study-37117723844
+
+
