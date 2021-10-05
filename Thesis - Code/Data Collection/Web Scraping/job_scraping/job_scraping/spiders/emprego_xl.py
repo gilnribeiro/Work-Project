@@ -11,7 +11,7 @@ class EmpregoXlSpider(scrapy.Spider):
     start_urls = [
         'https://www.empregoxl.com/empregos?p=1'
         ]
-
+    
     def parse(self, response):
         sel = Selector(response)
     
@@ -19,10 +19,9 @@ class EmpregoXlSpider(scrapy.Spider):
             url = response.urljoin(href)
             yield scrapy.Request(url, callback = self.parse_contents)
 
-        next_page = sel.css('#block-system-main .last a::attr(href)').get()
-        if next_page is not None:
-            url = urljoin('https://www.empregoxl.com', next_page)
-            yield scrapy.Request(url, callback=self.parse)
+        next_page = sel.css('#paginacao a::attr(href)')[-1].get()
+        if next_page is not None and next_page != response.url:
+            yield scrapy.Request(next_page, callback=self.parse)
 
 
     def parse_contents(self, response):
@@ -32,7 +31,7 @@ class EmpregoXlSpider(scrapy.Spider):
         il.add_css('post_date', 'a~ strong')
         il.add_value('scrape_date', date.today().strftime("%d/%m/%Y"))
         il.add_css('job_location', 'span strong')  
-        il.add_css('company', 'a span')
+        il.add_css('company', 'p > .fading+ strong')
         il.add_value('job_href', str(response.url))
 
         yield il.load_item()
