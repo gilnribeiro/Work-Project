@@ -1,44 +1,50 @@
 import requests
 from config import CLIENT_ID, API_KEY
 
-# url = "https://indeed-indeed.p.rapidapi.com/apigetjobs"
 
-# querystring = {"publisher":CLIENT_ID,"jobkeys":API_KEY,"v":"2","format":"json"}
+class IndeedApi():
+    def __init__(self):
+        self.session = requests.Session()
+        self.session.headers = {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Accept': 'application/json',
+            'client_id': CLIENT_ID,
+            'client_secret': API_KEY,
+        }
+        self.session.params = {
+            'grant_type': 'client_credentials', 
+            'scope': 'employer_access'
+        }
 
-# headers = {
-#     'x-rapidapi-host': "indeed-indeed.p.rapidapi.com",
-#     'x-rapidapi-key': "SIGN-UP-FOR-KEY"
-#     }
+    def get_authorization_code(self):
+        self.session.params = {
+            'client_id': CLIENT_ID,
+            'redirect_uri': "https%3A%2F%2Fgilnribeiro.github.io%2F",
+            'response_type': 'code',
+            'state': 'employer1234',
+            'scope': 'email+offline_access+employer_access'
 
-# response = requests.request("GET", url, headers=headers, params=querystring)
+        }
 
-# print(response.text)
+        return self.session.get('https://secure.indeed.com/oauth/v2/authorize').json()
 
-# url = "https://apis.indeed.com/oauth/v2/tokens"
+    def get_access_token(self, code):
+        self.session.headers = {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Accept': 'application/json',
+        }
+        self.session.params = {
+            'code': code,
+            'client_id': CLIENT_ID,
+            'client_secret': API_KEY,
+            'redirect_uri': "https%3A%2F%2Fgilnribeiro.github.io%2F",
+            'grant_type': 'authorization_code', 
+        }
+        return self.session.post('https://apis.indeed.com/oauth/v2/tokens').json()
 
-# headers = {
-#     'Content-Type': 'application/x-www-form-urlencoded',
-#     'Accept': 'application/json',
-#     'client_id': CLIENT_ID,
-#     'client_secret': API_KEY,
-# }
+    
 
-# params = {
-#     'grant_type': 'client_credentials',
-#     'scope': 'employer_acces'
-# }
-
-# response = requests.request("POST", url, headers=headers, params=params)
-
-# url = "https://secure.indeed.com/v2/api/appinfo"
-
-# headers = {
-#     ''
-# }
-
-api_url = 'http://api.indeed.com/ads/apisearch?publisher={}v=2&limit=100000&format=json'
-
-urlfirst = api_url + '&co=pt' + '&q='
-
-response = requests.get(urlfirst)
-
+Indeed = IndeedApi()
+authorization_code = Indeed.get_authorization_code()
+acess_token = Indeed.get_access_token(authorization_code['code'])
+Indeed.get_jobs()
