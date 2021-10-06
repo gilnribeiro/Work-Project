@@ -1,10 +1,9 @@
 import scrapy
-from scrapy.http.request import Request
 from ..items import EmpregoXlItem
-from scrapy.loader import ItemLoader
+# from scrapy.loader import ItemLoader
+from itemloaders import ItemLoader
 from scrapy.selector import Selector
 from datetime import date
-from urllib.parse import urljoin
 
 class EmpregoXlSpider(scrapy.Spider):
     name = 'emprego_xl'

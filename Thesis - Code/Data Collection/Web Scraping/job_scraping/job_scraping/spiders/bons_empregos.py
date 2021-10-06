@@ -1,7 +1,6 @@
 import scrapy
-from scrapy.http.request import Request
 from ..items import BonsEmpregosItem
-from scrapy.loader import ItemLoader
+from itemloaders import ItemLoader
 from scrapy.selector import Selector
 from datetime import date
 from urllib.parse import urljoin
