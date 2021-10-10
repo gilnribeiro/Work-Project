@@ -2,4 +2,13 @@
 "This post explores a few of these NLP and ML techniques, like text pre-processing, embedding, logistic regression, gradient-boosted machine, and neural networks."
 https://medium.springboard.com/identifying-duplicate-questions-a-machine-learning-case-study-37117723844
 
+Data Cleaning Steps:
+https://elitedatascience.com/data-cleaning
+
+30 Days of Python - Day 17 - Data Science Pipeline with Jupyter, 
+Pandas & FastAPI - Python TUTORIAL
+https://www.youtube.com/watch?v=CApCQKuWqBM
+
+
+
 

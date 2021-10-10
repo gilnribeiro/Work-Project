@@ -1,0 +1,19 @@
+Dockerfile: 
+https://naiveskill.com/dockerfile-tutorial-for-beginners/
+
+MongoDb Docker: 
+https://naiveskill.com/mongodb-docker/
+
+Use Docker and Python for a mongo Db Application: 
+https://kb.objectrocket.com/mongo-db/use-docker-and-python-for-a-mongodb-application-1046
+
+Building & Deploying Dockerized Flask + MongoDB Application:
+https://www.youtube.com/watch?v=RuaKvPq0Fzo
+
+Docker MongoDB:
+https://phoenixnap.com/kb/docker-mongodb
+
+----- USE mongoDBCompass to connect and see your database -----
+
+Importing mongo documents into pandas dataframes:
+https://alysivji.github.io/importing-mongo-documents-into-pandas-dataframes.html

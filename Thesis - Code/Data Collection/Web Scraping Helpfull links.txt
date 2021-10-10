@@ -1,0 +1,10 @@
+Storing from scrapy into Mongo DB database:
+https://www.youtube.com/watch?v=djfnjtYB2co&t=525s
+
+Scraping Websites into MongoDB using Scrapy Pipelines
+https://alysivji.github.io/mongodb-pipelines-in-scrapy.html
+https://doc.scrapy.org/en/latest/topics/item-pipeline.html
+https://www.pythonanywhere.com/
+
+Scheduling Web Scrapers on the PythonAnywhere cloud:
+https://alysivji.github.io/scrapy-part2-running-scrapy-on-pythonanywhere.html
