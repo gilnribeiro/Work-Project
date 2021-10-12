@@ -1,14 +1,12 @@
 from config import API_KEY
 import requests
-import os
-import json
-import pandas as pd
 from util import save_data_to_json
 from datetime import date
 from w3lib.html import remove_tags
 
 
-def call_api():#json query
+def call_api():
+    #json query
     params = {
         'api_key': API_KEY,
         'limit': 3890
@@ -50,14 +48,14 @@ def main():
             'scrape_date': date.today().strftime("%d/%m/%Y"),
             'company': company,
             'job_location': job_location,
-            'job_category': 'IT',
+            'job_category': '',
             'job_ref': f"https://www.itjobs.pt/oferta/{j['id']}/{j['slug']}",
             'salary': salary,
         }
 
         job_offers.append(job_offer)
 
-    save_data_to_json("C:/Users/gilnr/OneDrive - NOVASBE/Work Project/Thesis - Code/Job Vacancies Data/itjobs_jobs", jobs)
+    save_data_to_json("C:/Users/gilnr/OneDrive - NOVASBE/Work Project/Thesis - Code/Job Vacancies Data/itjobs_jobs", job_offers)
 
 if __name__ == '__main__':
     main()

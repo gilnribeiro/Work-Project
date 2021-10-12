@@ -9,6 +9,8 @@ https://elitedatascience.com/data-cleaning
 Pandas & FastAPI - Python TUTORIAL
 https://www.youtube.com/watch?v=CApCQKuWqBM
 
+Stack Overflow Tips & Tricks for Data Cleaning and Transformation with Pandas
+https://github.com/gardnmi/Notebooks/blob/master/Stack%20Overflow%20Tips%20%26%20Tricks.ipynb
 
-
-
+Pandas Cheat Sheet
+https://github.com/gardnmi/Notebooks/blob/master/PandasCheatSheet.ipynb
