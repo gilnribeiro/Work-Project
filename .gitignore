@@ -9,6 +9,7 @@ Thesis - Final Output/
 Thesis - Research/
 Thesis - Code/Job Vacancies Data/
 **/[Cc]onfig*
+.vscode
 
 # C extensions
 *.so
