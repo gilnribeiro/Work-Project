@@ -1,5 +1,5 @@
 import scrapy
-from ..items import BonsEmpregosItem
+from ..items import JobVacancyItem
 from itemloaders import ItemLoader
 from scrapy.selector import Selector
 from datetime import date
@@ -16,7 +16,7 @@ class NetEmpregosSpider(scrapy.Spider):
     
         for href in response.css('.tituloemprego a::attr(href)').getall():  
 
-            il = ItemLoader(item=BonsEmpregosItem(), selector=response)
+            il = ItemLoader(item=JobVacancyItem(), selector=response)
             il.add_css('job_location', '.categoriasemprego a:nth-child(1)')  
             il.add_css('job_category', 'a+ a')
             item = il.load_item()
@@ -36,8 +36,10 @@ class NetEmpregosSpider(scrapy.Spider):
         il.add_css('job_title', '.page-header')
         il.add_css('post_date', '.validadedoemprego', re = '(\d{1,2}?\s\w{3,9}?,\s\d{4}?)')
         il.add_value('scrape_date', date.today().strftime("%d/%m/%Y"))
+        il.add_css('job_category', '.odd:nth-child(1) .col2')
         il.add_css('company', '.sobreempresa ::text', re='([a-zA-z]\w{3,30})')
         il.add_value('job_href', str(response.url))
+        il.add_value('salary', '')
 
         yield il.load_item()
 

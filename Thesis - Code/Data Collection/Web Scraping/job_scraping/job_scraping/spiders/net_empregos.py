@@ -1,5 +1,5 @@
 import scrapy
-from ..items import NetEmpregosItem
+from ..items import JobVacancyItem
 from itemloaders import ItemLoader
 from scrapy.selector import Selector
 from datetime import date
@@ -26,7 +26,7 @@ class NetEmpregosSpider(scrapy.Spider):
 
 
     def parse_contents(self, response):
-        il = ItemLoader(item=NetEmpregosItem(), selector=response)
+        il = ItemLoader(item=JobVacancyItem(), selector=response)
         il.add_css('job_description', 'p')
         il.add_css('job_title', '.title')
         il.add_css('post_date', '.candidate-listing-footer li:nth-child(3)')
@@ -35,6 +35,7 @@ class NetEmpregosSpider(scrapy.Spider):
         il.add_css('job_location', '.flaticon-pin+ a')
         il.add_css('job_category', '.fa-tags+ a')
         il.add_value('job_href', str(response.url))
+        il.add_value('salary', '')
 
         yield il.load_item()
 

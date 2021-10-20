@@ -1,0 +1,13 @@
+job_title
+job_description
+post_date
+scrape_date
+company
+job_location
+job_category
+job_href
+
+# Optional:
+salary
+
+# There are 9 fields

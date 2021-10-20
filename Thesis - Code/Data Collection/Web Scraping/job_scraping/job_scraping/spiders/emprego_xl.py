@@ -1,5 +1,5 @@
 import scrapy
-from ..items import EmpregoXlItem
+from ..items import JobVacancyItem
 # from scrapy.loader import ItemLoader
 from itemloaders import ItemLoader
 from scrapy.selector import Selector
@@ -24,13 +24,15 @@ class EmpregoXlSpider(scrapy.Spider):
 
 
     def parse_contents(self, response):
-        il = ItemLoader(item=EmpregoXlItem(), selector=response)
+        il = ItemLoader(item=JobVacancyItem(), selector=response)
         il.add_css('job_description', '#description')
         il.add_css('job_title', 'h2')
         il.add_css('post_date', 'a~ strong')
         il.add_value('scrape_date', date.today().strftime("%d/%m/%Y"))
+        il.add_css('job_category', '')
         il.add_css('job_location', 'span strong')  
         il.add_css('company', 'p > .fading+ strong')
         il.add_value('job_href', str(response.url))
+        il.add_value('salary', '')
 
         yield il.load_item()
