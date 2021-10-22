@@ -1,6 +1,6 @@
 from bs4 import BeautifulSoup
 import scrapy
-from ..items import JobVacancyItem
+from .items import JobVacancyItem
 # from scrapy.loader import ItemLoader
 from itemloaders import ItemLoader
 from scrapy.selector import Selector
@@ -9,6 +9,8 @@ from datetime import date
 def get_jobDescription(response):
     soup = BeautifulSoup(response.text, 'html.parser')
     ref = soup.find('div', {'id':'idviewjob'})
+
+    jobCategory, salary, jobLocation, jobBenefits, postDate, company = '','','','','',''
 
     for i in ref.find_all('strong'):
         id = i.text
@@ -50,7 +52,7 @@ def get_jobDescription(response):
     return dataToAdd
     
 
-class EmpregoXlSpider(scrapy.Spider):
+class EmpregoOrgSpider(scrapy.Spider):
     name = 'emprego_org'
     start_urls = [
         'https://empregos.org/jobfind.php?f=%7B%7D&action=search&auth_sess=b32b5c79fb901f90536261a2e302a588&ref=558a97e97b671d3dca7fc7b67&bx_jtitle=&rdjt=2&jids[]=00&lids[]=000&bx_prv[]=&bx_plng[]=0&bx_kwd=&rdKeyw=2&bx_minsalary=&bx_maxsalary=&bx_lngids[]=-&rdLang=2&tids[]=0&posted=0&o=1&o_show=4&cmdSearch=++Pesquisar++'

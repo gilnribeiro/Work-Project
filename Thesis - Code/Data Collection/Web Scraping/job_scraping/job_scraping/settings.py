@@ -12,6 +12,17 @@ BOT_NAME = 'job_scraping'
 SPIDER_MODULES = ['job_scraping.spiders']
 NEWSPIDER_MODULE = 'job_scraping.spiders'
 
+FEEDS = {
+    'items.json': {
+        'format': 'jsonlines',
+        'encoding': 'utf8',
+        # 'store_empty': False,
+        # 'fields': ['job_title', 'job_description', 'post_date', 'scrape_date', 'company',
+        #            'job_location', 'job_category', 'job_href', 'salary'], 
+        }
+}
+
+# FEEDS_FORMAT = {'jsonlines': 'scrapy.exporters.JsonLinesItemExporter'}
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'job_scraping (+http://www.yourdomain.com)'
@@ -25,9 +36,9 @@ ROBOTSTXT_OBEY = True
 # Configure a delay for requests for the same website (default: 0)
 # See https://docs.scrapy.org/en/latest/topics/settings.html#download-delay
 # See also autothrottle settings and docs
-#DOWNLOAD_DELAY = 3
+DOWNLOAD_DELAY = 3
 # The download delay setting will honor only one of:
-#CONCURRENT_REQUESTS_PER_DOMAIN = 16
+CONCURRENT_REQUESTS_PER_DOMAIN = 16
 #CONCURRENT_REQUESTS_PER_IP = 16
 
 # Disable cookies (enabled by default)
@@ -67,9 +78,12 @@ DOWNLOADER_MIDDLEWARES = {
 
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
-#ITEM_PIPELINES = {
+ITEM_PIPELINES = {
 #    'job_scraping.pipelines.JobScrapingPipeline': 300,
-#}
+   'job_scraping.pipelines.TooManyEmptyFields': 300,
+   'job_scraping.pipelines.DuplicatesPipeline': 301,
+
+}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html

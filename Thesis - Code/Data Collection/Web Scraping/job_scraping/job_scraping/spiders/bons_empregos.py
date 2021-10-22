@@ -1,11 +1,11 @@
 import scrapy
-from ..items import JobVacancyItem
+from .items import JobVacancyItem
 from itemloaders import ItemLoader
 from scrapy.selector import Selector
 from datetime import date
 from urllib.parse import urljoin
 
-class NetEmpregosSpider(scrapy.Spider):
+class BonsEmpregosSpider(scrapy.Spider):
     name = 'bons_empregos'
     start_urls = [
         'https://www.bonsempregos.com/procurar-emprego'

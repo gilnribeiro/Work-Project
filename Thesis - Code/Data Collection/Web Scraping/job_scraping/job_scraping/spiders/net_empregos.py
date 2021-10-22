@@ -1,5 +1,5 @@
 import scrapy
-from ..items import JobVacancyItem
+from .items import JobVacancyItem
 from itemloaders import ItemLoader
 from scrapy.selector import Selector
 from datetime import date

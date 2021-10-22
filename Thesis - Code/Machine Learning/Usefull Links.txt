@@ -1,0 +1,12 @@
+
+Regarding having a classifier that has more data incoming over time:
+ - Look up on-line algorithms which learn sequentially from data, point by point
+
+A practical introduction to incremental learning in Python using scikit-multiflow:
+https://towardsdatascience.com/incremental-online-learning-with-scikit-multiflow-6b846913a50b
+
+On Retraining or not a model:
+(Check answer 1 and answer 2) - Mini bach learning may be what you are looking for
+https://datascience.stackexchange.com/questions/12761/should-a-model-be-re-trained-if-new-observations-are-available
+
+"your model should learn, it should not memorize items. So if you made a good model you don't need to worry about the new items. However, in some cases model may change in time, in these cases, you can relearn the model after a while (with past data those you surely know the answers)."

@@ -1,0 +1,53 @@
+# Start
+- pip install Scrapy
+
+# Create project
+cmd: scrapy startproject <project name>
+cmd: cd <project name>
+cmd: scrapy genspider <name> <website to scrape>
+
+# On <name> spider
+- start url: <get url>
+
+# On Items
+- declare fields (what you want to scrape from the site)
+
+# On <name> spider
+- from ..items import <class name>
+
+Step 1:
+- Launch: scrapy shell <start url>
+- get the response you need for the for loop
+- Inside the for loop get the items you need
+
+Step 2:
+- To scrape: cmd: scrapy crawl <spider name>
+If 503 error comes up you should define a USER-AGENT -> GO settings -> Uncomment and past from https://developers.whatismybrowser.com/useragents/explore/software_name/googlebot/ The first one
+
+###################################
+More advanced: rotate user agents
+- install scrapy-user-agents
+Copy paste: the DOWNLOAD MIDDLEWARE part in the scrapy user-agents documentation and past on settings
+
+DOWNLOADER_MIDDLEWARES = {
+    'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,
+    'scrapy_user_agents.middlewares.RandomUserAgentMiddleware': 400,
+}
+
+Using Proxys:
+- install scrapy-proxy-pool
+Then go to settings -> paste this
+-> PROXY_POOL_ENABLED = True
+and 
+-> DOWNLOADER_MIDDLEWARES = {
+    # ...
+    'scrapy_proxy_pool.middlewares.ProxyPoolMiddleware': 610,
+    'scrapy_proxy_pool.middlewares.BanDetectionMiddleware': 620,
+    # ...
+}
+
+###################################
+
+# STORE DATA:
+- Store in json or csv
+cmd: scrapy crawl <spider name> -o fileName.json (or .csv)
