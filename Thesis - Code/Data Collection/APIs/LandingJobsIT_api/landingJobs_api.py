@@ -1,7 +1,8 @@
+import json
+import os
 import requests
 from w3lib.html import remove_tags
 from datetime import date
-from util import save_data_to_json
 
 
 class LandingJobs():
@@ -19,6 +20,21 @@ class LandingJobs():
         response = self.session.get(f'https://landing.jobs/api/v1/companies/{id}')
         if response.status_code == 200:
             self.company = response.json()        
+
+
+def save_data_to_json(file_name, data):
+    """Save data to a json file creating it if it does not already exist
+    :parameter: file_name -> 'example' do not add the '.json' 
+    :parameter: data -> json data with the following structure [{},{},...]"""
+    # Save Data
+    if os.path.exists(file_name+'.json') == False:
+        with open(file_name+'.json', 'w', encoding='utf-8') as json_file:
+            json.dump(data, json_file, indent=0, ensure_ascii=False)
+        json_file.close()
+    else:
+        with open(file_name+'.json', 'a+', encoding='utf-8') as json_file:
+            json.dump(data, json_file, indent=0, ensure_ascii=False)
+        json_file.close()
 
 
 def handleResults(results, L):
@@ -54,8 +70,7 @@ def handleResults(results, L):
 
     return job_offer
 
-
-if __name__ == '__main__':
+def main(filename):
     L = LandingJobs()
     job_offers = []
     for i in range(0, 1000, 50):
@@ -65,6 +80,8 @@ if __name__ == '__main__':
         else:
             job_offers += handleResults(results=L.results, L=L)
 
-    save_data_to_json("C:/Users/gilnr/OneDrive - NOVASBE/Work Project/Thesis - Code/Job Vacancies Data/LandingJobsIT_jobs", job_offers)
-    
+    save_data_to_json(f"C:/Users/gilnr/OneDrive - NOVASBE/Work Project/Thesis - Code/Data/{filename}", job_offers)
+
+if __name__ == '__main__':
+    main('LandingJobsIT_jobs')   
     print('Jobs Retrieved successefully')

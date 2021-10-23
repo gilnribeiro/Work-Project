@@ -1,11 +1,25 @@
+import os
 import requests
 import json
 from datetime import date, timedelta
-import  re
-from util import save_data_to_json
+import re
 
 
-
+def save_data_to_json(file_name, data):
+    """Save data to a json file creating it if it does not already exist
+    :parameter: file_name -> 'example' do not add the '.json' 
+    :parameter: data -> json data with the following structure [{},{},...]"""
+    # Save Data
+    if os.path.exists(file_name+'.json') == False:
+        with open(file_name+'.json', 'w', encoding='utf-8') as json_file:
+            json.dump(data, json_file, indent=0, ensure_ascii=False)
+        json_file.close()
+    else:
+        with open(file_name+'.json', 'a+', encoding='utf-8') as json_file:
+            json.dump(data, json_file, indent=0, ensure_ascii=False)
+        json_file.close()
+        
+        
 def call(page):
     payload = json.dumps({
         "search": "",
@@ -53,7 +67,7 @@ def get_post_date(d):
 
     return post_date
 
-def handleResults():
+def handleResults(filename):
     """
     This function handles the json output from the API call.
     :parameter: results -> json response
@@ -88,9 +102,9 @@ def handleResults():
                 'salary': salary,
             })
 
-    save_data_to_json("C:/Users/gilnr/OneDrive - NOVASBE/Work Project/Thesis - Code/Job Vacancies Data/jooble_jobs", job_offers)
+    save_data_to_json(f"C:/Users/gilnr/OneDrive - NOVASBE/Work Project/Thesis - Code/Data/{filename}", job_offers)
 
 
 if __name__ == '__main__':
-    handleResults()
+    handleResults('jooble_jobs')
     print('Jobs Retrieved Sucessefuly')

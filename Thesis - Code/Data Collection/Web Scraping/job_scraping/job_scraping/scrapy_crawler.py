@@ -13,24 +13,24 @@ from scrapy.utils.project import get_project_settings
 configure_logging()
 settings = get_project_settings()
 settings.set('FEED_FORMAT', 'jsonlines')
-settings.set('FEED_URI', 'result.json')
+# settings.set('FEED_URI', 'result.json')
 runner = CrawlerRunner(settings)
 
 @defer.inlineCallbacks
 def crawl():
-    # settings.set('FEED_URI', 'BonsEmpregos.json')
+    # settings.set('FEED_URI', '../Data/BonsEmpregos.json')
     # yield runner.crawl(BonsEmpregosSpider)
 
-    settings.set('FEED_URI', 'CargaDeTrabalhos.json')
+    settings.set('FEED_URI', '../Data/CargaDeTrabalhos.json')
     yield runner.crawl(CargaDeTrabalhosSpider)
 
-    # settings.set('FEED_URI', 'EmpregoOrg.json')
+    # settings.set('FEED_URI', '../Data/EmpregoOrg.json')
     # yield runner.crawl(EmpregoOrgSpider)
 
-    # settings.set('FEED_URI', 'EmpregoXl.json')
+    # settings.set('FEED_URI', '../Data/EmpregoXl.json')
     # yield runner.crawl(EmpregoXlSpider)
 
-    # settings.set('FEED_URI', 'NetEmpregos.json')
+    # settings.set('FEED_URI', '../Data/NetEmpregos.json')
     # yield runner.crawl(NetEmpregosSpider)
 
     reactor.stop()

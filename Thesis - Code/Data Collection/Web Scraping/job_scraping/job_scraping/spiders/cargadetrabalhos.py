@@ -26,13 +26,13 @@ class CargaDeTrabalhosSpider(scrapy.Spider):
         for job in response.css('.entrycontent'):
             il = ItemLoader(item=JobVacancyItem(), selector=job)
             il.add_css('job_description', 'p')
-            il.add_css('job_title', '.h2 a')
+            il.add_css('job_title', 'h2 a')
             il.add_css('post_date', '.date')
             il.add_value('scrape_date', date.today().strftime("%d/%m/%Y"))
             il.add_css('company', 'b:nth-child(1)')
             il.add_css('job_location', 'b:nth-child(3)')
             il.add_value('job_category', '')
-            il.add_css('job_href', '.h2 a::attr(href)')
+            il.add_css('job_href', 'h2 a::attr(href)')
             il.add_value('salary', '')
 
             yield il.load_item()

@@ -1,10 +1,9 @@
-from tqdm import tqdm
+import json
+import os
 import time
-from util import save_data_to_json
-import config
 from careerjet_api_client import CareerjetAPIClient
 import time
-import config
+from .config import affid
 from datetime import date
 import csv
 # pip install careerjet-api-client
@@ -12,6 +11,20 @@ import csv
 from careerjet_api_client import CareerjetAPIClient
 
 
+def save_data_to_json(file_name, data):
+    """Save data to a json file creating it if it does not already exist
+    :parameter: file_name -> 'example' do not add the '.json' 
+    :parameter: data -> json data with the following structure [{},{},...]"""
+    # Save Data
+    if os.path.exists(file_name+'.json') == False:
+        with open(file_name+'.json', 'w', encoding='utf-8') as json_file:
+            json.dump(data, json_file, indent=0, ensure_ascii=False)
+        json_file.close()
+    else:
+        with open(file_name+'.json', 'a+', encoding='utf-8') as json_file:
+            json.dump(data, json_file, indent=0, ensure_ascii=False)
+        json_file.close()
+        
 def main(file_name):
     
     page_size = 99
@@ -21,7 +34,7 @@ def main(file_name):
     cj  =  CareerjetAPIClient("pt_PT")
 
     result_json = cj.search({
-                            "affid"       :  config.affid,
+                            "affid"       :  affid,
                             "user_ip"     : "11.22.33.44",
                             "url"         : "http://www.careerjet.pt/jobsearch?sort=date&l=Portugal",
                             "user_agent"  : "Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Firefox/31.0",
@@ -57,13 +70,13 @@ def main(file_name):
     # Get number of pages
     # n_pages = result_json["pages"]
 
-    for page in tqdm(range(2, n_pages+1)):
+    for page in range(2, n_pages+1):
         # Wait time 
         time.sleep(0.5)
 
         # Get json
         result_json = cj.search({
-                            "affid"       :  config.affid,
+                            "affid"       :  affid,
                             "user_ip"     : "11.22.33.44",
                             "url"         : "http://www.example.com/jobsearch?sort=date&l=Portugal",
                             "user_agent"  : "Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Firefox/31.0",
@@ -105,7 +118,7 @@ def main(file_name):
             writer.writerows(job_offers_csv)
             f.close()
     # Save data to json
-    save_data_to_json("C:/Users/gilnr/OneDrive - NOVASBE/Work Project/Thesis - Code/Job Vacancies Data/"+file_name, job_offers)
+    save_data_to_json("C:/Users/gilnr/OneDrive - NOVASBE/Work Project/Thesis - Code/Data/"+file_name, job_offers)
     print("Success")
     # Convert data to csv
     # pandas_json_to_csv("C:/Users/gilnr/OneDrive - NOVASBE/Work Project/Thesis - Code/Job Vacancies Data/"+file_name)     

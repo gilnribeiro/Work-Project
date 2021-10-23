@@ -1,10 +1,25 @@
-from config import API_KEY
+import json
+import os
+from .config import API_KEY
 import requests
-from util import save_data_to_json
 from datetime import date
 from w3lib.html import remove_tags
 
 
+def save_data_to_json(file_name, data):
+    """Save data to a json file creating it if it does not already exist
+    :parameter: file_name -> 'example' do not add the '.json' 
+    :parameter: data -> json data with the following structure [{},{},...]"""
+    # Save Data
+    if os.path.exists(file_name+'.json') == False:
+        with open(file_name+'.json', 'w', encoding='utf-8') as json_file:
+            json.dump(data, json_file, indent=0, ensure_ascii=False)
+        json_file.close()
+    else:
+        with open(file_name+'.json', 'a+', encoding='utf-8') as json_file:
+            json.dump(data, json_file, indent=0, ensure_ascii=False)
+        json_file.close()
+        
 def call_api():
     #json query
     params = {
@@ -13,14 +28,14 @@ def call_api():
         }
 
     response = requests.get(url=f"https://api.itjobs.pt/job/list.json", params=params)
-    print(response)
+    # print(response)
 
     # Save results to json
     results = response.json()
     jobs = results['results']
     return jobs
 
-def main():
+def main(filename):
     jobs = call_api()
 
     job_offers = []
@@ -55,8 +70,8 @@ def main():
 
         job_offers.append(job_offer)
 
-    save_data_to_json("C:/Users/gilnr/OneDrive - NOVASBE/Work Project/Thesis - Code/Job Vacancies Data/itjobs_jobs", job_offers)
+    save_data_to_json(f"C:/Users/gilnr/OneDrive - NOVASBE/Work Project/Thesis - Code/Data/{filename}", job_offers)
 
 if __name__ == '__main__':
-    main()
+    main('itjobs_jobs')
     print('Jobs Retrieved successefully')
