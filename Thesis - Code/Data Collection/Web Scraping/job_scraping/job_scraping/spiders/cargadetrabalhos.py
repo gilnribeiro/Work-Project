@@ -26,12 +26,12 @@ class CargaDeTrabalhosSpider(scrapy.Spider):
         'http://www.cargadetrabalhos.net/category/uncategorized/page/1/?submit=pesquisar%20categoria'
         ]
     
-    custom_settings = {
-        f'{name}.json': {
-        'format': 'jsonlines',
-        'encoding': 'utf8',
-        }
-    }
+    # custom_settings = {
+    #     f'{name}.json': {
+    #     'format': 'jsonlines',
+    #     'encoding': 'utf8',
+    #     }
+    # }
 
     def parse(self, response):
         sel = Selector(response)

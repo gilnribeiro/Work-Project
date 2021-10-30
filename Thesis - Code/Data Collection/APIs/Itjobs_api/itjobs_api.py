@@ -13,11 +13,17 @@ def save_data_to_json(file_name, data):
     # Save Data
     if os.path.exists(file_name+'.json') == False:
         with open(file_name+'.json', 'w', encoding='utf-8') as json_file:
-            json.dump(data, json_file, indent=0, ensure_ascii=False)
+            # json.dump(data, json_file, indent=0, ensure_ascii=False)
+            for entry in data:
+                json.dump(entry, json_file)
+                json_file.write('\n')
         json_file.close()
     else:
         with open(file_name+'.json', 'a+', encoding='utf-8') as json_file:
-            json.dump(data, json_file, indent=0, ensure_ascii=False)
+            # json.dump(data, json_file, indent=0, ensure_ascii=False)
+            for entry in data:
+                json.dump(entry, json_file, ensure_ascii=False)
+                json_file.write('\n')
         json_file.close()
         
 def call_api():

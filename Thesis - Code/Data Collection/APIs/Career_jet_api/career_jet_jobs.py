@@ -1,4 +1,5 @@
 import json
+import jsonlines
 import os
 import time
 from careerjet_api_client import CareerjetAPIClient
@@ -18,11 +19,17 @@ def save_data_to_json(file_name, data):
     # Save Data
     if os.path.exists(file_name+'.json') == False:
         with open(file_name+'.json', 'w', encoding='utf-8') as json_file:
-            json.dump(data, json_file, indent=0, ensure_ascii=False)
+            # json.dump(data, json_file, indent=0, ensure_ascii=False)
+            for entry in data:
+                json.dump(entry, json_file)
+                json_file.write('\n')
         json_file.close()
     else:
         with open(file_name+'.json', 'a+', encoding='utf-8') as json_file:
-            json.dump(data, json_file, indent=0, ensure_ascii=False)
+            # json.dump(data, json_file, indent=0, ensure_ascii=False)
+            for entry in data:
+                json.dump(entry, json_file, ensure_ascii=False)
+                json_file.write('\n')
         json_file.close()
         
 def main(file_name):
@@ -112,11 +119,11 @@ def main(file_name):
             job_offers_csv.append(record)
 
     # Save data to csv
-    with open('career_jet_jobs.csv', 'w', newline='', encoding='utf-8') as f:
-            writer = csv.writer(f)
-            writer.writerow(['job_title', 'job_description', 'post_date', 'scrape_date', 'company', 'job_location', 'job_category', 'job_href', 'salary'])
-            writer.writerows(job_offers_csv)
-            f.close()
+    # with open('career_jet_jobs.csv', 'w', newline='', encoding='utf-8') as f:
+    #         writer = csv.writer(f)
+    #         writer.writerow(['job_title', 'job_description', 'post_date', 'scrape_date', 'company', 'job_location', 'job_category', 'job_href', 'salary'])
+    #         writer.writerows(job_offers_csv)
+    #         f.close()
     # Save data to json
     save_data_to_json("C:/Users/gilnr/OneDrive - NOVASBE/Work Project/Thesis - Code/Data/"+file_name, job_offers)
     print("Success")
@@ -124,4 +131,4 @@ def main(file_name):
     # pandas_json_to_csv("C:/Users/gilnr/OneDrive - NOVASBE/Work Project/Thesis - Code/Job Vacancies Data/"+file_name)     
 
 if __name__ == "__main__":
-    main("career_jet_jobs")
+    main("career_jet_jobs_V1")

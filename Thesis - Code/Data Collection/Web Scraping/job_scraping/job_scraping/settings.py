@@ -64,11 +64,17 @@ CONCURRENT_REQUESTS_PER_DOMAIN = 16
 #DOWNLOADER_MIDDLEWARES = {
 #    'job_scraping.middlewares.JobScrapingDownloaderMiddleware': 543,
 #}
+PROXY_POOL_ENABLED = True
 
 DOWNLOADER_MIDDLEWARES = {
+    # ...
+    # 'scrapy_proxy_pool.middlewares.ProxyPoolMiddleware': 610,
+    # 'scrapy_proxy_pool.middlewares.BanDetectionMiddleware': 620,
+    # ...
     'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,
     'scrapy_user_agents.middlewares.RandomUserAgentMiddleware': 400,
 }
+
 
 # Enable or disable extensions
 # See https://docs.scrapy.org/en/latest/topics/extensions.html

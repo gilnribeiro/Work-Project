@@ -11,6 +11,7 @@ api_names = ['Career Jet API', 'ITjobs API', 'Jooble API', 'Landing Jobs API']
 filenames = ['career_jet_api', 'itjobs_api', 'jooble_api', 'landingjobs_api']
 
 for index, api in tqdm(enumerate(apis)):
-    print(f'Running {api_names[index]}...')
+    print(f'\nRunning {api_names[index]}...')
     api(filenames[index])
     print(f'{api_names[index]} - SUCCESS')
+
