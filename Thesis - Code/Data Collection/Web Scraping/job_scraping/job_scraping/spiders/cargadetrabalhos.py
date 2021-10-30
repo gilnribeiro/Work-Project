@@ -3,8 +3,23 @@ from .items import JobVacancyItem
 from itemloaders import ItemLoader
 from scrapy.selector import Selector
 from datetime import date
-from urllib.parse import urljoin
+import datetime as dt
+from w3lib.html import remove_tags
 
+
+def longToShortDate(x, sep):
+    months = ['janeiro', 'fevereiro','março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro']
+    months_dic = {value:idx+1 for idx, value in enumerate(months)}
+    date = [i.strip() for i in x.split(sep)]
+    return f'{date[0]}/{months_dic[date[1]]}/{date[2]}'
+
+# convert to datetime object
+def convertToDatetime(x, function=longToShortDate):
+    x = x.lower().replace(',','')
+    x = dt.datetime.strptime(function(x, '/'), "%d/%m/%Y")
+    return x
+
+    
 class CargaDeTrabalhosSpider(scrapy.Spider):
     name = 'cargadetrabalhos'
     start_urls = [
@@ -15,9 +30,6 @@ class CargaDeTrabalhosSpider(scrapy.Spider):
         f'{name}.json': {
         'format': 'jsonlines',
         'encoding': 'utf8',
-        # 'store_empty': False,
-        # 'fields': ['job_title', 'job_description', 'post_date', 'scrape_date', 'company',
-        #            'job_location', 'job_category', 'job_href', 'salary'], 
         }
     }
 
@@ -34,10 +46,17 @@ class CargaDeTrabalhosSpider(scrapy.Spider):
             il.add_value('job_category', '')
             il.add_css('job_href', 'h2 a::attr(href)')
             il.add_value('salary', '')
+            
+            last_date = convertToDatetime(remove_tags(job.css('.date').get()))
 
             yield il.load_item()
+    
+        # Scrape only until one week post results
+        today = dt.datetime.today()
+        delta = today - last_date
 
-        next_page = sel.xpath('//*[@id="content"]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/a[2]/@href').get()
-        if next_page is not None:
-            # url = urljoin('http://www.cargadetrabalhos.net', next_page)
-            yield scrapy.Request(next_page, callback=self.parse)
+        if delta.days <= 7:
+            next_page = sel.xpath('//*[@id="content"]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/a[2]/@href').get()
+            if next_page is not None:
+                # url = urljoin('http://www.cargadetrabalhos.net', next_page)
+                yield scrapy.Request(next_page, callback=self.parse)
