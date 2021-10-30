@@ -10,9 +10,8 @@ from scrapy.crawler import CrawlerRunner
 from scrapy.utils.log import configure_logging
 from scrapy.utils.project import get_project_settings
 
-import os
 # Make sure to be in the Data Collection directory
-os.chdir("/Users/gilnr/OneDrive - NOVASBE/Work Project/Thesis - Code/Data Collection")
+FOLDER_PATH = "/Users/gilnr/OneDrive - NOVASBE/Work Project/Thesis - Code/Data/"
 
 configure_logging()
 settings = get_project_settings()
@@ -22,19 +21,19 @@ runner = CrawlerRunner(settings)
 
 @defer.inlineCallbacks
 def crawl():
-    settings.set('FEED_URI', '../Data/BonsEmpregos.json')
+    settings.set('FEED_URI', FOLDER_PATH + "BonsEmpregos.json")
     yield runner.crawl(BonsEmpregosSpider)
 
-    settings.set('FEED_URI', '../Data/CargaDeTrabalhos.json')
+    settings.set('FEED_URI', FOLDER_PATH + "CargaDeTrabalhos.json")
     yield runner.crawl(CargaDeTrabalhosSpider)
 
-    settings.set('FEED_URI', '../Data/EmpregoOrg.json')
+    settings.set('FEED_URI', FOLDER_PATH + "EmpregoOrg.json")
     yield runner.crawl(EmpregoOrgSpider)
 
-    settings.set('FEED_URI', '../Data/EmpregoXl.json')
+    settings.set('FEED_URI', FOLDER_PATH + "EmpregoXl.json")
     yield runner.crawl(EmpregoXlSpider)
 
-    settings.set('FEED_URI', '../Data/NetEmpregos.json')
+    settings.set('FEED_URI', FOLDER_PATH + "NetEmpregos.json")
     yield runner.crawl(NetEmpregosSpider)
 
     reactor.stop()
