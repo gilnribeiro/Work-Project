@@ -1,11 +1,10 @@
 import json 
-import pymongo
 from pymongo import MongoClient
 import ssl
 from config import DEFAULT_CLUSTER, PASSWORD, DEFAULT_DB, USERNAME
 
-class Database():
-    def __init__(self, USERNAME, PASSWORD, DEFAULT_DB, DEFAULT_CLUSTER):
+class AtlasDatabase():
+    def __init__(self, USERNAME=USERNAME, PASSWORD=PASSWORD, DEFAULT_DB=DEFAULT_DB, DEFAULT_CLUSTER=DEFAULT_CLUSTER):
         self.client = MongoClient(f"mongodb+srv://{USERNAME}:{PASSWORD}@{DEFAULT_CLUSTER}.ohzpo.mongodb.net/{DEFAULT_DB}?retryWrites=true&w=majority", ssl_cert_reqs=ssl.CERT_NONE) 
 
     def pull_data(self, database_name, collection_name):
@@ -18,7 +17,7 @@ class Database():
         :parameter: database_name
         :parameter: collection_name
         """
-        self.client = MongoClient(f'mongodb+srv://{USERNAME}:{PASSWORD}@{DEFAULT_CLUSTER}.ohzpo.mongodb.net/{DEFAULT_DB}?retryWrites=true&w=majority', ssl_cert_reqs=ssl.CERT_NONE) 
+        # self.client = MongoClient(f'mongodb+srv://{USERNAME}:{PASSWORD}@{DEFAULT_CLUSTER}.ohzpo.mongodb.net/{DEFAULT_DB}?retryWrites=true&w=majority', ssl_cert_reqs=ssl.CERT_NONE) 
         # open the database
         dbname = self.client[database_name]
         # get the collection
@@ -42,7 +41,7 @@ class Database():
         database = self.client[database_name]
         return database
 
-    def insert_file_db(self, file_location, database_name, collection_name): 
+    def insert_file_data(self, file_location, database_name, collection_name): 
         """
         Insert many (insert files into specified database)
         __ Important __ 
