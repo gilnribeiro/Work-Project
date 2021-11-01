@@ -76,7 +76,7 @@ def main(filename):
 
         job_offers.append(job_offer)
 
-    save_data_to_json(f"C:/Users/gilnr/OneDrive - NOVASBE/Work Project/Thesis - Code/Data/{filename}", job_offers)
+    save_data_to_json(f"C:/Users/gilnr/OneDrive - NOVASBE/Work Project/Code/Data/{filename}", job_offers)
 
 if __name__ == '__main__':
     main('itjobs_jobs')

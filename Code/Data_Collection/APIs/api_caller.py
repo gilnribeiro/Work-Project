@@ -1,7 +1,7 @@
-from Career_jet_api.career_jet_jobs import main as career_jet_api
-from Itjobs_api.itjobs_api import main as itjobs_api
-from Jooble_api.jooble_api import handleResults as jooble_api
-from LandingJobsIT_api.landingJobs_api import main as landingjobs_api
+from .Career_jet_api.career_jet_jobs import main as career_jet_api
+from .Itjobs_api.itjobs_api import main as itjobs_api
+from .Jooble_api.jooble_api import handleResults as jooble_api
+from .LandingJobsIT_api.landingJobs_api import main as landingjobs_api
 
 def main():
     apis = [career_jet_api, itjobs_api, jooble_api, landingjobs_api]

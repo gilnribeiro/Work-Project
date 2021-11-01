@@ -125,10 +125,11 @@ def main(file_name):
     #         writer.writerows(job_offers_csv)
     #         f.close()
     # Save data to json
-    save_data_to_json("C:/Users/gilnr/OneDrive - NOVASBE/Work Project/Thesis - Code/Data/"+file_name, job_offers)
+    save_data_to_json("C:/Users/gilnr/OneDrive - NOVASBE/Work Project/Code/Data/"+file_name, job_offers)
     print("Success")
     # Convert data to csv
     # pandas_json_to_csv("C:/Users/gilnr/OneDrive - NOVASBE/Work Project/Thesis - Code/Job Vacancies Data/"+file_name)     
 
 if __name__ == "__main__":
     main("career_jet_jobs_V1")
+    

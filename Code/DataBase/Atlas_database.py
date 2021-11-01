@@ -1,7 +1,7 @@
 import json 
 from pymongo import MongoClient
 import ssl
-from config import DEFAULT_CLUSTER, PASSWORD, DEFAULT_DB, USERNAME
+from .config import DEFAULT_CLUSTER, PASSWORD, DEFAULT_DB, USERNAME
 
 class AtlasDatabase():
     def __init__(self, USERNAME=USERNAME, PASSWORD=PASSWORD, DEFAULT_DB=DEFAULT_DB, DEFAULT_CLUSTER=DEFAULT_CLUSTER):

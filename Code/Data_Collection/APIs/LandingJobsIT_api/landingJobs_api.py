@@ -86,7 +86,7 @@ def main(filename):
         else:
             job_offers += handleResults(results=L.results, L=L)
 
-    save_data_to_json(f"C:/Users/gilnr/OneDrive - NOVASBE/Work Project/Thesis - Code/Data/{filename}", job_offers)
+    save_data_to_json(f"C:/Users/gilnr/OneDrive - NOVASBE/Work Project/Code/Data/{filename}", job_offers)
 
 if __name__ == '__main__':
     main('LandingJobsIT_jobs')   
