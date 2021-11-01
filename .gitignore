@@ -16,6 +16,7 @@ Work Images/
 dags/
 logs/
 plugins/
+setup.py
 **/[Cc]onfig*
 .vscode
 
