@@ -5,14 +5,13 @@ __pycache__/
 
 # Others
 .idea
-Thesis - Final Output/
-Thesis - Research/
-Thesis - Code/Job Vacancies Data/
-Thesis - Code/Data/
-Thesis - Code/Machine Learning/
-Thesis - Code/dags/
-Thesis - Code/logs/
-Thesis - Code/plugins/
+Research/
+Code/Job Vacancies Data/
+Code/Data/
+Code/Machine Learning/
+Code/dags/
+Code/logs/
+Code/plugins/
 Work Images/
 dags/
 logs/
