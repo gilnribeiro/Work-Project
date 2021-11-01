@@ -67,3 +67,21 @@ class AtlasDatabase():
             collection.insert_many(file_data)  
         else:
             collection.insert_one(file_data)
+
+    def delete_many(self, query, database_name, collection_name):
+        """
+        Delete many (delete a given set of documents that mach a specified query)
+        :parameter: query -> mongodb query
+        :parameter: database_name
+        :parameter: collection_name
+        """
+        # database 
+        db = self.client[database_name]
+        
+        # Created or Switched to collection 
+        collection = db[collection_name]
+
+        # Delete many based on the specified query
+        d = collection.delete_many(query)     
+    
+        print("Deletect Count:", d.deleted_count)
