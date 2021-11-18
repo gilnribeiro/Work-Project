@@ -88,9 +88,9 @@ def convertToDatetime(dataframe, function, sep=' '):
     return dataframe
 
 # Convert Scrape date to datetime
-def toDatetime(dataFrame, columns_list):
+def toDatetime(dataFrame, columns_list, dayfirst=False):
     for i in columns_list:
-        dataFrame[i] = pd.to_datetime(dataFrame[i])
+        dataFrame[i] = pd.to_datetime(dataFrame[i], dayfirst=dayfirst)
     return dataFrame
     
 def notDateToNan(x):

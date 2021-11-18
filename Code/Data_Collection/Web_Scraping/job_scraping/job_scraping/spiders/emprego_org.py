@@ -9,14 +9,14 @@ import datetime as dt
 from w3lib.html import remove_tags
 
 def converToDatetime(x, year='2021'):
-    if x == 'Hoje':
+    if 'Hoje' in x:
         return dt.datetime.today()
-    elif x == 'Ontem':
+    elif 'Ontem' in x:
         return dt.datetime.today() -  timedelta(days=1)
     else:
         date = x.split(' ')[1]+' '+x.split(' ')[0]
-        date += year
-        return dt.datetime.strftime(date, '%d-%b-%Y')
+        date += ' '+year
+        return dt.datetime.strptime(date, '%d-%b-%Y')
 
 def get_jobDescription(response):
     soup = BeautifulSoup(response.text, 'html.parser')

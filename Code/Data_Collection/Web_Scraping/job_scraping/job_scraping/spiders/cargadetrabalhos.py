@@ -8,7 +8,7 @@ from w3lib.html import remove_tags
 
 
 def longToShortDate(x, sep):
-    months = ['janeiro', 'fevereiro','março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro']
+    months = ['Janeiro', 'Fevereiro','Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro']
     months_dic = {value:idx+1 for idx, value in enumerate(months)}
     date = [i.strip() for i in x.split(sep)]
     return f'{date[0]}/{months_dic[date[1]]}/{date[2]}'
@@ -23,15 +23,9 @@ def convertToDatetime(x, function=longToShortDate):
 class CargaDeTrabalhosSpider(scrapy.Spider):
     name = 'cargadetrabalhos'
     start_urls = [
-        'http://www.cargadetrabalhos.net/category/uncategorized/page/1/?submit=pesquisar%20categoria'
+        'https://www.cargadetrabalhos.net/page/1/'
         ]
-    
-    # custom_settings = {
-    #     f'{name}.json': {
-    #     'format': 'jsonlines',
-    #     'encoding': 'utf8',
-    #     }
-    # }
+
 
     def parse(self, response):
         sel = Selector(response)
@@ -55,8 +49,9 @@ class CargaDeTrabalhosSpider(scrapy.Spider):
         today = dt.datetime.today()
         delta = today - last_date
 
-        if delta.days <= 7:
-            next_page = sel.xpath('//*[@id="content"]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/a[2]/@href').get()
-            if next_page is not None:
-                # url = urljoin('http://www.cargadetrabalhos.net', next_page)
-                yield scrapy.Request(next_page, callback=self.parse)
+        # if delta.days <= 7:
+        next_page = sel.css('.next a::attr(href)').get()
+        # next_page = sel.xpath('//*[@id="content"]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/a[2]/@href').get()
+        if next_page is not None:
+            # url = urljoin('http://www.cargadetrabalhos.net', next_page)
+            yield scrapy.Request(next_page, callback=self.parse)

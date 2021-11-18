@@ -84,4 +84,4 @@ class AtlasDatabase():
         # Delete many based on the specified query
         d = collection.delete_many(query)     
     
-        print("Deletect Count:", d.deleted_count)
+        print("Deleted Count:", d.deleted_count)

@@ -30,7 +30,7 @@ def main():
                         pipe(postDateFillNa).
                         pipe(dropNullJobs).
                         pipe(applyFuncToColumn, function=cleanJobTitle, columns_list=['job_title']).
-                        pipe(toDatetime, ['scrape_date']).
+                        pipe(toDatetime, columns_list=['scrape_date'], dayfirst=True).
                         pipe(getPortugalLocation).
                         pipe(convertToDatetime, longToShortDate).
                         pipe(removeDupes)
@@ -46,7 +46,7 @@ def main():
                         pipe(postDateFillNa).
                         pipe(dropNullJobs).
                         pipe(applyFuncToColumn, function=cleanJobTitle, columns_list=['job_title']).
-                        pipe(toDatetime, ['scrape_date', 'post_date']).
+                        pipe(toDatetime, columns_list=['scrape_date', 'post_date'], dayfirst=True).
                         pipe(listToRows, 'job_location').
                         pipe(removeDupes)
     )
@@ -58,7 +58,7 @@ def main():
                         pipe(postDateFillNa).
                         pipe(dropNullJobs).
                         pipe(applyFuncToColumn, function=cleanJobTitle, columns_list=['job_title']).
-                        pipe(toDatetime, ['scrape_date']).
+                        pipe(toDatetime, columns_list=['scrape_date'], dayfirst=True).
                         pipe(convertToDatetime, longToShortDate, '/').
                         pipe(removeDupes)
     )
@@ -72,7 +72,7 @@ def main():
                         pipe(pipeInvertDate).
                         pipe(dropNullJobs).
                         pipe(applyFuncToColumn, function=cleanJobTitle, columns_list=['job_title']).
-                        pipe(toDatetime, ['scrape_date', 'post_date']).
+                        pipe(toDatetime, columns_list=['scrape_date', 'post_date'], dayfirst=True).
                         # # pipe(convertToDatetime, longToShortDate, '/').
                         pipe(removeDupes)
     )
@@ -85,7 +85,8 @@ def main():
                         pipe(dropNullJobs).
                         pipe(applyFuncToColumn, function=cleanJobTitle, columns_list=['job_title']).
                         pipe(postDatePreprocess, '/').
-                        pipe(toDatetime, ['scrape_date', 'post_date']).
+                        pipe(toDatetime, columns_list=['scrape_date'], dayfirst=True).
+                        pipe(toDatetime, ['post_date']).
                         pipe(removeDupes)
     )
 
@@ -101,7 +102,8 @@ def main():
                         pipe(dropNullJobs).
                         pipe(applyFuncToColumn, function=cleanJobTitle, columns_list=['job_title']).
                         pipe(applyFuncToColumn, function=simplifyDate, columns_list=['post_date']).
-                        pipe(toDatetime, ['scrape_date', 'post_date']).
+                        pipe(toDatetime, columns_list=['scrape_date'], dayfirst=True).
+                        pipe(toDatetime, ['post_date']).
                         # pipe(.apply(lambda x: dt.datetime.strftime('%Y-%m-%d'))).
                         pipe(removeDupes)
     )
@@ -113,11 +115,11 @@ def main():
                         pipe(postDateFillNa).
                         pipe(dropNullJobs).
                         pipe(applyFuncToColumn, function=cleanJobTitle, columns_list=['job_title']).
-                        pipe(toDatetime, ['scrape_date', 'post_date']).
+                        pipe(toDatetime, columns_list=['scrape_date', 'post_date'], dayfirst=True).
                         pipe(removeTags, ['job_title']).
                         pipe(removeDupes)
     )
-
+    
     # Landing Jobs IT
     landing_jobs_clean = (landing_jobs.
                         pipe(copy_df).
@@ -126,7 +128,8 @@ def main():
                         pipe(dropNullJobs).
                         pipe(applyFuncToColumn, function=cleanJobTitle, columns_list=['job_title']).
                         pipe(postDatePreprocess, 'T').
-                        pipe(toDatetime, ['scrape_date', 'post_date']).
+                        pipe(toDatetime, columns_list=['scrape_date'], dayfirst=True).
+                        pipe(toDatetime, ['post_date']).
                         # pipe(removeTags, 'job_title').
                         pipe(removeDupes)
     )
@@ -142,7 +145,7 @@ def main():
                         pipe(applyFuncToColumn, function=cleanJobTitle, columns_list=['job_title']).
                         pipe(applyFuncToColumn, function=cleanJobTitle, columns_list=['job_title']).
                         pipe(cleanDescription, ['job_title']).
-                        pipe(toDatetime, ['scrape_date', 'post_date']).
+                        pipe(toDatetime, columns_list=['scrape_date', 'post_date'], dayfirst=True).
                         pipe(removeDupes)
     )
 
