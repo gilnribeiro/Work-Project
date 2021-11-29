@@ -1,7 +1,7 @@
 from pathlib import Path, PureWindowsPath
 import pandas as pd
 
-from .data_cleaning_functions import *
+from data_cleaning_functions import *
 
 def main():
     main_folder = PureWindowsPath("c:\\Users\\gilnr\\OneDrive - NOVASBE\\Work Project\\Code")
@@ -29,7 +29,7 @@ def main():
                         pipe(replacenan).
                         pipe(postDateFillNa).
                         pipe(dropNullJobs).
-                        pipe(applyFuncToColumn, function=cleanJobTitle, columns_list=['job_title']).
+                        # pipe(applyFuncToColumn, function=cleanJobTitle, columns_list=['job_title']).
                         pipe(toDatetime, columns_list=['scrape_date'], dayfirst=True).
                         pipe(getPortugalLocation).
                         pipe(convertToDatetime, longToShortDate).
@@ -45,7 +45,7 @@ def main():
                         pipe(replacenan).
                         pipe(postDateFillNa).
                         pipe(dropNullJobs).
-                        pipe(applyFuncToColumn, function=cleanJobTitle, columns_list=['job_title']).
+                        # pipe(applyFuncToColumn, function=cleanJobTitle, columns_list=['job_title']).
                         pipe(toDatetime, columns_list=['scrape_date', 'post_date'], dayfirst=True).
                         pipe(listToRows, 'job_location').
                         pipe(removeDupes)
@@ -57,7 +57,7 @@ def main():
                         pipe(replacenan).
                         pipe(postDateFillNa).
                         pipe(dropNullJobs).
-                        pipe(applyFuncToColumn, function=cleanJobTitle, columns_list=['job_title']).
+                        # pipe(applyFuncToColumn, function=cleanJobTitle, columns_list=['job_title']).
                         pipe(toDatetime, columns_list=['scrape_date'], dayfirst=True).
                         pipe(convertToDatetime, longToShortDate, '/').
                         pipe(removeDupes)
@@ -71,7 +71,7 @@ def main():
                         pipe(applyFuncToColumn).
                         pipe(pipeInvertDate).
                         pipe(dropNullJobs).
-                        pipe(applyFuncToColumn, function=cleanJobTitle, columns_list=['job_title']).
+                        # pipe(applyFuncToColumn, function=cleanJobTitle, columns_list=['job_title']).
                         pipe(toDatetime, columns_list=['scrape_date', 'post_date'], dayfirst=True).
                         # # pipe(convertToDatetime, longToShortDate, '/').
                         pipe(removeDupes)
@@ -83,7 +83,7 @@ def main():
                         pipe(replacenan).
                         pipe(postDateFillNa).
                         pipe(dropNullJobs).
-                        pipe(applyFuncToColumn, function=cleanJobTitle, columns_list=['job_title']).
+                        # pipe(applyFuncToColumn, function=cleanJobTitle, columns_list=['job_title']).
                         pipe(postDatePreprocess, '/').
                         pipe(toDatetime, columns_list=['scrape_date'], dayfirst=True).
                         pipe(toDatetime, ['post_date']).
@@ -100,7 +100,7 @@ def main():
                         pipe(replacenan).
                         pipe(postDateFillNa).
                         pipe(dropNullJobs).
-                        pipe(applyFuncToColumn, function=cleanJobTitle, columns_list=['job_title']).
+                        # pipe(applyFuncToColumn, function=cleanJobTitle, columns_list=['job_title']).
                         pipe(applyFuncToColumn, function=simplifyDate, columns_list=['post_date']).
                         pipe(toDatetime, columns_list=['scrape_date'], dayfirst=True).
                         pipe(toDatetime, ['post_date']).
@@ -114,7 +114,7 @@ def main():
                         pipe(replacenan).
                         pipe(postDateFillNa).
                         pipe(dropNullJobs).
-                        pipe(applyFuncToColumn, function=cleanJobTitle, columns_list=['job_title']).
+                        # pipe(applyFuncToColumn, function=cleanJobTitle, columns_list=['job_title']).
                         pipe(toDatetime, columns_list=['scrape_date', 'post_date'], dayfirst=True).
                         pipe(removeTags, ['job_title']).
                         pipe(removeDupes)
@@ -126,7 +126,7 @@ def main():
                         pipe(replacenan).
                         pipe(postDateFillNa).
                         pipe(dropNullJobs).
-                        pipe(applyFuncToColumn, function=cleanJobTitle, columns_list=['job_title']).
+                        # pipe(applyFuncToColumn, function=cleanJobTitle, columns_list=['job_title']).
                         pipe(postDatePreprocess, 'T').
                         pipe(toDatetime, columns_list=['scrape_date'], dayfirst=True).
                         pipe(toDatetime, ['post_date']).
@@ -142,8 +142,8 @@ def main():
                         pipe(postDateFillNa).
                         pipe(dropNullJobs).
                         # two pipes are needed beacause - for some reason, the function was not replacing some words it should
-                        pipe(applyFuncToColumn, function=cleanJobTitle, columns_list=['job_title']).
-                        pipe(applyFuncToColumn, function=cleanJobTitle, columns_list=['job_title']).
+                        # pipe(applyFuncToColumn, function=cleanJobTitle, columns_list=['job_title']).
+                        # pipe(applyFuncToColumn, function=cleanJobTitle, columns_list=['job_title']).
                         pipe(cleanDescription, ['job_title']).
                         pipe(toDatetime, columns_list=['scrape_date', 'post_date'], dayfirst=True).
                         pipe(removeDupes)
@@ -178,8 +178,9 @@ def main():
                 pipe(cleanDescription, ['job_title', 'job_description']).
                 pipe(removeDupes, ['job_title', 'job_description','company', 'job_location'])
     )
-
+    
     df_clean.reset_index(drop=True, inplace=True)
+
 
 
     #######################################################
@@ -188,7 +189,6 @@ def main():
 
     with open(DATA_FOLDER / 'full_data_clean.json', 'w', encoding='utf-8') as file:
         df_clean.to_json(file, force_ascii=False, orient='records', date_format='iso', date_unit='s')
-
-
+    
 if __name__ == '__main__':
     main()

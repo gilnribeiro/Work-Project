@@ -119,19 +119,37 @@ def compose(*functions: ComposableFunction) -> ComposableFunction:
 def cleanJobChars(x: str) -> str:
     # Capitalize the job title
     x = x.lower()
-    stop_chars = ['(m/f)', 'm/f', '-', ' - ', ' – ', '(remote)', ' / ', '(', 'para']
-    ex = False
-    for i in stop_chars:
-        if i in x:
-            if i == '-':
-                for exception in ['-se', '-o', '-a', '-os', '-as', 'e-', '-e']:
-                    if exception in x:
-                        ex = True
-                if ex == False:
-                    x = x.split(i)[0]
-                pass
-            else:
-                x = x.split(i)[0]     
+    stop_chars = ['(m/f)', 'm/f', '-', ':', ' - ', ' – ', '(remote)', ' / ', '(', ' para ', '_']
+    hyphen_exceptions = ['-se', '-o', '-a', '-os', '-as', 'e-', '-e']
+    title_position_exceptions = ['(junior)', '(senior)']
+    
+    def exception_handle(x: str, exception_list: list):
+        ex = False
+        for exception in exception_list:
+            if exception in x:
+                ex = True
+            if ex == False:
+                aux = x.split(stop)
+                for val in aux:
+                    if val != stop and val != '':
+                        x = val
+                        break
+        return x
+    
+    for stop in stop_chars:
+        if stop in x:
+            if stop == '-':
+                exception_handle(x, hyphen_exceptions)
+            if stop == '(':
+                exception_handle(x, title_position_exceptions)
+            if stop == '_':
+                x = x.split(stop)[0]
+            else:  
+                aux = x.split(stop)
+                for val in aux:
+                    if val != stop and val != '':
+                        x = val
+                        break
     return x.strip()
 
 def replaceGenderWords(x: str) -> str:
@@ -141,7 +159,8 @@ def replaceGenderWords(x: str) -> str:
     return x
 
 def replaceCommonFillers(x: str) -> str:
-    fillers = ['recruta-se', 'oferta de emprego:', 'oferta:', 'oferta de emprego', 'oferta', 'precisa-se', 'precisas-se']
+    fillers = ['recruta-se para', 'recruta-se', 'oferta de emprego:', 'oferta:', 'oferta de emprego', 'oferta', 'precisa-se', 
+               'precisas-se', 'part-time']
     for i in fillers:
         x = x.replace(i, '')
     return x
@@ -150,7 +169,6 @@ cleanJobTitle = compose(replaceCommonFillers, replaceGenderWords, cleanJobChars)
 
 # How to use:
 # applyFuncToColumn(bons_empregos, function=cleanJobTitle, columns_list=['job_title'])
-
 
 """
 OTHER FUNCTIONS
