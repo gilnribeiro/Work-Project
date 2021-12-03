@@ -144,7 +144,7 @@ def main():
                         # two pipes are needed beacause - for some reason, the function was not replacing some words it should
                         # pipe(applyFuncToColumn, function=cleanJobTitle, columns_list=['job_title']).
                         # pipe(applyFuncToColumn, function=cleanJobTitle, columns_list=['job_title']).
-                        pipe(cleanDescription, ['job_title']).
+                        # pipe(cleanDescription, ['job_title']).
                         pipe(toDatetime, columns_list=['scrape_date', 'post_date'], dayfirst=True).
                         pipe(removeDupes)
     )
@@ -173,9 +173,9 @@ def main():
                 pipe(replacenan).sort_values(by='post_date').
                 pipe(postDateFillNa).
                 pipe(dropNullJobs).
-                pipe(applyFuncToColumn, function=cleanJobTitle, columns_list=['job_title']).
-                pipe(cleanCompany).
-                pipe(cleanDescription, ['job_title', 'job_description']).
+                # pipe(applyFuncToColumn, function=cleanJobTitle, columns_list=['job_title']).
+                # pipe(cleanCompany).
+                # pipe(cleanDescription, ['job_title', 'job_description']).
                 pipe(removeDupes, ['job_title', 'job_description','company', 'job_location'])
     )
     
