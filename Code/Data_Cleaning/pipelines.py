@@ -12,7 +12,7 @@ def main():
     career_jet = pd.read_json(DATA_FOLDER / 'career_jet_api.json', lines=True)
     carga_de_trabalhos = pd.read_json(DATA_FOLDER / 'CargaDeTrabalhos.json', lines=True)
     emprego_xl = pd.read_json(DATA_FOLDER / 'EmpregoXl.json', lines=True)
-    emprego_org = pd.read_json(DATA_FOLDER / 'EmpregoOrg.json')
+    emprego_org = pd.read_json(DATA_FOLDER / 'EmpregoOrg.json', lines=True)
     itjobs = pd.read_json(DATA_FOLDER / 'itjobs_api.json', lines=True)
     jooble = pd.read_json(DATA_FOLDER / 'jooble_api.json', lines=True)
     landing_jobs = pd.read_json(DATA_FOLDER / 'landingjobs_api.json', lines=True)
@@ -175,7 +175,7 @@ def main():
                 pipe(dropNullJobs).
                 # pipe(applyFuncToColumn, function=cleanJobTitle, columns_list=['job_title']).
                 # pipe(cleanCompany).
-                # pipe(cleanDescription, ['job_title', 'job_description']).
+                pipe(cleanDescription, ['job_title', 'job_description']).
                 pipe(removeDupes, ['job_title', 'job_description','company', 'job_location'])
     )
     
