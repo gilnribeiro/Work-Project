@@ -86,16 +86,16 @@ cleanJobLocation = compose(commonLocationFillers, replaceWithEmpty)
 def matchLocation(x:str, locations_dict:dict) -> str:       
     if x in locations_dict: # exact match
         location = locations_dict[x] 
-        return location
+        return location.capitalize()
     elif x in ['portugal', 'remote']:
-        return x
+        return x.capitalize()
     else:
         jarowinkler = JaroWinkler()
         loc, sim = max([(locations_dict[loc], jarowinkler.similarity(x, loc)) for loc in locations_dict], key=lambda x: x[1])
         if sim >= 0.6:
-            return loc
+            return loc.capitalize()
         else: # no similarity match
-            return f"NOT FOUND - {x} , {loc}, {sim}"
+            return f"NOT FOUND"
         
 def applyMatchLocation(dataframe, function=matchLocation, columns_list=['job_location'], locations_dict=dict()):
     for i in columns_list:

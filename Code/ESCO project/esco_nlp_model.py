@@ -54,42 +54,54 @@ def getMatches(vectorizer, tf_idf_matrix, known_job_titles, esco_dict, text, ret
     try:
         best_match, score = known_job_titles[matches.nonzero()[1][0]], matches[0,matches.nonzero()[1][0]]
     except:
-        return 'NOT FOUND', 'NOT FOUND', 'NOT FOUND', 'NOT FOUND' 
+        # return 'NOT FOUND', 'NOT FOUND', 'NOT FOUND', 'NOT FOUND' 
+        return text, 'NOT FOUND', 'NOT FOUND', 'NOT FOUND', 'NOT FOUND', 'NOT FOUND'
     if score >= threshold:
-        return best_match, esco_dict[best_match]['skills'], esco_dict[best_match]['iscoGroup'], score
-    return 'NOT FOUND', 'NOT FOUND', 'NOT FOUND', 'NOT FOUND'
+        return best_match, best_match, best_match, esco_dict[best_match]['skills'], esco_dict[best_match]['iscoGroup'], score
+    # return 'NOT FOUND', 'NOT FOUND', 'NOT FOUND', 'NOT FOUND'
+    return text, best_match, 'NOT FOUND',  esco_dict[best_match]['skills'], esco_dict[best_match]['iscoGroup'], score
 
 if __name__ == '__main__':
     
     FOLDER_PATH = "/Users/gilnr/OneDrive - NOVASBE/Work Project/Code/ESCO project/"
     
     data = pd.read_json(FOLDER_PATH + 'esco_project_data.json')
-    with open("esco_dictionary.json", 'r', encoding='utf-8') as file:
+    with open(FOLDER_PATH + "esco_dictionary.json", 'r', encoding='utf-8') as file:
         esco_dict = json.load(file)
     
     vectorizer, tf_idf_matrix, known_job_titles = nlpModel(esco_dict)
 
+    all_titles = []
+    all_matches = []
     best_matches = []
     skills_list = []
     scores = []
     isco_groups = []
 
     for text in tqdm(data['job_title']):
-        best_match, skills, isco_group, score = getMatches(vectorizer, tf_idf_matrix, known_job_titles, 
+        all_title, all_match, best_match, skills, isco_group, score = getMatches(vectorizer, tf_idf_matrix, known_job_titles, 
                                 esco_dict, text, ret_score=True, threshold=0.6)
+        all_titles.append(all_title)
+        all_matches.append(all_match)
         best_matches.append(best_match)
         skills_list.append(skills)
         scores.append(score)
         isco_groups.append(isco_group)
         
-    data['similarity_titles'] = best_matches
+    data['similarity_all_titles'] = all_titles
+    data['similarity_all_matches'] = all_matches
+    data['similarity_best_matches'] = best_matches
     data['similarity_scores'] = scores
     data['skills'] = skills_list
     data['iscoGroup'] = isco_groups
     
-    count = len(data.loc[data['similarity_titles'] != 'NOT FOUND'])
-    print('There are ', count, ' similar ESCO matches at a 60% threshold from a total of ', len(data), 
-      'jobs. This is approximatly', round(count/len(data),4)*100,'% of jobs')
+    count_best = len(data.loc[data['similarity_best_matches'] != 'NOT FOUND'])
+    count_all = len(data.loc[data['similarity_all_matches'] != 'NOT FOUND'])
+    print('There are ', count_best, ' similar ESCO matches at a 60% threshold from a total of ', len(data), 
+      'jobs. This is approximatly', round(count_best/len(data),4)*100,'% of jobs\nOverall, disregarding the threshold, there were ', count_all, 
+      ' matches. This is approximatly', round(count_all/len(data),4)*100,'% of jobs')
     
     with open(FOLDER_PATH + 'esco_project_data_with_similarity.json', 'w', encoding='utf-8') as file:
         data.to_json(file, force_ascii=False, orient='records', date_format='iso', date_unit='s')
+        
+    data.to_csv(FOLDER_PATH + 'esco_project_data_with_similarity.csv')

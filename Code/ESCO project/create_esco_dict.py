@@ -93,13 +93,13 @@ def createEscoDict(merged_occupations, merged_df):
     esco_aux_dict = esco_dict.copy() 
     for key in esco_aux_dict:
         esco_dict[key]['skills'] = merged_df.loc[
-            merged_df['occupationUri']==esco_dict['diretor tecnico']['occupationUri']
+            merged_df['occupationUri']==esco_dict[key]['occupationUri']
             ]['preferredLabel'].to_list()
     
     return esco_dict
 
 if __name__ == '__main__':
-    # To run this file, make sure you are in the project's directory
+    # To run this file, make sure you are in the ESCO project's directory
 
     t1 = time.time()
     

@@ -24,7 +24,7 @@ def dropNullJobs(dataframe):
     return dataframe
 
 # remove duplicates
-def removeDupes(dataframe, subset=['job_title', 'job_description', 'company', 'job_location']):
+def removeDupes(dataframe, subset=['job_title', 'job_description', 'company', 'job_location', 'post_date']):
     dataframe = dataframe.sort_values(by='post_date').drop_duplicates(subset=subset, keep='last')
     return dataframe
 
