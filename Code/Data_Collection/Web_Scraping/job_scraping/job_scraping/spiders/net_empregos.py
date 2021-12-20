@@ -32,7 +32,7 @@ class NetEmpregosSpider(scrapy.Spider):
         # Scrape only until one week post results
         today = dt.datetime.today()
         delta = today - last_date
-        if delta.days <= 7:
+        if delta.days <= 18:
             next_page = sel.css('.text-center nav a::attr(href)').extract()[-1]
             if next_page is not None:
                 url = urljoin('https://www.net-empregos.com', next_page)

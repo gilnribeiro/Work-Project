@@ -34,6 +34,8 @@ def get_jobDescription(response):
         elif id == 'Remuneração:':
             try:
                 salary = i.parent.parent.find_all('td')[1].text.strip()
+                if salary == 'Não especificado':
+                    salary = ''
             except AttributeError:
                 salary = ''
         elif id == 'Localização do emprego:':
@@ -105,8 +107,8 @@ class EmpregoOrgSpider(scrapy.Spider):
         data = get_jobDescription(response)
         il = ItemLoader(item=JobVacancyItem(), selector=response)
         il.add_css('job_title', 'h3')
-        il.add_css('job_description', 'h4+ p')
-        il.add_value('job_description', '\nBenefícios e outras informações:\n'+data['jobBenefits'])
+        il.add_css('job_description', '#idviewjob')
+        # il.add_value('job_description', '\nBenefícios e outras informações:\n'+data['jobBenefits'])
         il.add_value('post_date', data['postDate'])
         il.add_value('scrape_date', date.today().strftime("%d/%m/%Y"))
         il.add_value('job_location', data['jobLocation'])  

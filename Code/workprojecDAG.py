@@ -55,12 +55,12 @@ def transform():
     data_cleaning_pipelines()
     print('Data Transformation Complete!')
 
-def load():
-    print('Loading data to Mongo DB database')
-    LoadToMongoDb()
-    print('Loading Complete!')
+# def load():
+#     print('Loading data to Mongo DB database')
+#     LoadToMongoDb()
+#     print('Loading Complete!')
 
 # # THE ETL PIPELINE
 extract()
 transform()
-load()
+# load()
