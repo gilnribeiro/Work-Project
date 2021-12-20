@@ -8,7 +8,8 @@ __pycache__/
 Research/
 Code/Job Vacancies Data/
 Code/Data/
-Code/Machine Learning/
+Code/Machine_Learning/
+Code/Data_Exploration/Images ESCO
 Code/dags/
 Code/logs/
 Code/plugins/
@@ -19,6 +20,10 @@ plugins/
 setup.py
 **/[Cc]onfig*
 .vscode
+Code/ESCO project/*.json
+Code/ESCO project/*.csv
+Code/ESCO project/*.xlsx
+
 
 # C extensions
 *.so

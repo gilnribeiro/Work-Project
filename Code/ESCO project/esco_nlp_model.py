@@ -6,6 +6,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from scipy.sparse import csr_matrix
 import sparse_dot_topn.sparse_dot_topn as ct
 
+FOLDER_PATH = "/Users/gilnr/OneDrive - NOVASBE/Work Project/Code/ESCO project/"
 
 def awesome_cossim_top(A, B, ntop, lower_bound=0):
     # force A and B as a CSR matrix.
@@ -61,9 +62,14 @@ def getMatches(vectorizer, tf_idf_matrix, known_job_titles, esco_dict, text, ret
     # return 'NOT FOUND', 'NOT FOUND', 'NOT FOUND', 'NOT FOUND'
     return text, best_match, 'NOT FOUND',  esco_dict[best_match]['skills'], esco_dict[best_match]['iscoGroup'], score
 
+
+def getISCOdict():
+    isco = pd.read_csv(FOLDER_PATH + 'v1.0.8/ISCOGroups_pt.csv')
+    isco_dict = {i.code:i.preferredLabel for i in isco.itertuples()}
+    return isco_dict
+
+
 if __name__ == '__main__':
-    
-    FOLDER_PATH = "/Users/gilnr/OneDrive - NOVASBE/Work Project/Code/ESCO project/"
     
     data = pd.read_json(FOLDER_PATH + 'esco_project_data.json')
     with open(FOLDER_PATH + "esco_dictionary.json", 'r', encoding='utf-8') as file:
@@ -94,6 +100,7 @@ if __name__ == '__main__':
     data['similarity_scores'] = scores
     data['skills'] = skills_list
     data['iscoGroup'] = isco_groups
+    data['iscoNames'] = data.iscoGroup.map(getISCOdict())
     
     count_best = len(data.loc[data['similarity_best_matches'] != 'NOT FOUND'])
     count_all = len(data.loc[data['similarity_all_matches'] != 'NOT FOUND'])
@@ -105,3 +112,5 @@ if __name__ == '__main__':
         data.to_json(file, force_ascii=False, orient='records', date_format='iso', date_unit='s')
         
     data.to_csv(FOLDER_PATH + 'esco_project_data_with_similarity.csv')
+    data.to_excel(FOLDER_PATH + 'esco_project_data_with_similarity.xlsx')
+    

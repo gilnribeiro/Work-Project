@@ -35,7 +35,7 @@ def main():
                         pipe(convertToDatetime, longToShortDate).
                         pipe(removeDupes)
     )
-    print(f'Previous shape: {bons_empregos.shape}\nCurrent shape:{bons_empregos_clean.shape}\n Removed Duplicates: {len(bons_empregos)-len(bons_empregos_clean)}\n')
+    print(f'bons_empregos:\n Previous shape: {bons_empregos.shape}\nCurrent shape:{bons_empregos_clean.shape}\n Removed Duplicates: {len(bons_empregos)-len(bons_empregos_clean)}\n')
 
     # Career Jet
     # convert job location to list
@@ -51,7 +51,7 @@ def main():
                         pipe(listToRows, 'job_location').
                         pipe(removeDupes)
     )
-    print(f'Previous shape: {career_jet.shape}\nCurrent shape:{career_jet_clean.shape}\n Removed Duplicates: {len(career_jet)-len(career_jet_clean)}\n')
+    print(f'career_jet:\nPrevious shape: {career_jet.shape}\nCurrent shape:{career_jet_clean.shape}\n Removed Duplicates: {len(career_jet)-len(career_jet_clean)}\n')
 
     # Carga de Trabalhos
     carga_de_trabalhos_clean = (carga_de_trabalhos.
@@ -64,7 +64,7 @@ def main():
                         pipe(convertToDatetime, longToShortDate, '/').
                         pipe(removeDupes)
     )
-    print(f'Previous shape: {carga_de_trabalhos.shape}\nCurrent shape:{carga_de_trabalhos_clean.shape}\n Removed Duplicates: {len(carga_de_trabalhos)-len(carga_de_trabalhos_clean)}\n')
+    print(f'carga_de_trabalhos:\nPrevious shape: {carga_de_trabalhos.shape}\nCurrent shape:{carga_de_trabalhos_clean.shape}\n Removed Duplicates: {len(carga_de_trabalhos)-len(carga_de_trabalhos_clean)}\n')
 
     # Emprego XL
     emprego_xl_clean = (emprego_xl.
@@ -79,7 +79,7 @@ def main():
                         # # pipe(convertToDatetime, longToShortDate, '/').
                         pipe(removeDupes)
     )
-    print(f'Previous shape: {emprego_xl.shape}\nCurrent shape:{emprego_xl_clean.shape}\n Removed Duplicates: {len(emprego_xl)-len(emprego_xl_clean)}\n')
+    print(f'emprego_xl:\nPrevious shape: {emprego_xl.shape}\nCurrent shape:{emprego_xl_clean.shape}\n Removed Duplicates: {len(emprego_xl)-len(emprego_xl_clean)}\n')
 
     # Emprego Org
     emprego_org_clean = (emprego_org.
@@ -93,7 +93,7 @@ def main():
                         pipe(toDatetime, ['post_date']).
                         pipe(removeDupes)
     )
-    print(f'Previous shape: {emprego_org.shape}\nCurrent shape:{emprego_org_clean.shape}\n Removed Duplicates: {len(emprego_org)-len(emprego_org_clean)}\n')
+    print(f'emprego_org:\nPrevious shape: {emprego_org.shape}\nCurrent shape:{emprego_org_clean.shape}\n Removed Duplicates: {len(emprego_org)-len(emprego_org_clean)}\n')
 
     # ITJobs
     def simplifyDate(x):
@@ -112,7 +112,7 @@ def main():
                         # pipe(.apply(lambda x: dt.datetime.strftime('%Y-%m-%d'))).
                         pipe(removeDupes)
     )
-    print(f'Previous shape: {itjobs.shape}\nCurrent shape:{itjobs_clean.shape}\n Removed Duplicates: {len(itjobs)-len(itjobs_clean)}\n')
+    print(f'itjobs:\nPrevious shape: {itjobs.shape}\nCurrent shape:{itjobs_clean.shape}\n Removed Duplicates: {len(itjobs)-len(itjobs_clean)}\n')
 
     # Jooble
     jooble_clean = (jooble.
@@ -125,7 +125,7 @@ def main():
                         pipe(removeTags, ['job_title']).
                         pipe(removeDupes)
     )
-    print(f'Previous shape: {jooble.shape}\nCurrent shape:{jooble_clean.shape}\n Removed Duplicates: {len(jooble)-len(jooble_clean)}\n')
+    print(f'jooble:\nPrevious shape: {jooble.shape}\nCurrent shape:{jooble_clean.shape}\n Removed Duplicates: {len(jooble)-len(jooble_clean)}\n')
     
     # Landing Jobs IT
     landing_jobs_clean = (landing_jobs.
@@ -140,7 +140,7 @@ def main():
                         # pipe(removeTags, 'job_title').
                         pipe(removeDupes)
     )
-    print(f'Previous shape: {landing_jobs.shape}\nCurrent shape:{landing_jobs_clean.shape}\n Removed Duplicates: {len(landing_jobs)-len(landing_jobs_clean)}\n')
+    print(f'landing_jobs:\nPrevious shape: {landing_jobs.shape}\nCurrent shape:{landing_jobs_clean.shape}\n Removed Duplicates: {len(landing_jobs)-len(landing_jobs_clean)}\n')
 
     # Net Empregos
     net_empregos_clean = (net_empregos.
@@ -157,7 +157,7 @@ def main():
                         pipe(removeDupes)
     )
 
-    print(f'Previous shape: {net_empregos.shape}\nCurrent shape:{net_empregos_clean.shape}\n Removed Duplicates: {len(net_empregos)-len(net_empregos_clean)}\n')
+    print(f'net_empregos:\nPrevious shape: {net_empregos.shape}\nCurrent shape:{net_empregos_clean.shape}\n Removed Duplicates: {len(net_empregos)-len(net_empregos_clean)}\n')
     
     # Add Website Identifier before concating all dataframes into a single one
     jobs_dfs = [bons_empregos_clean, career_jet_clean, carga_de_trabalhos_clean, emprego_xl_clean, emprego_org_clean, itjobs_clean, jooble_clean, landing_jobs_clean, net_empregos_clean]
@@ -191,7 +191,7 @@ def main():
     
     df_clean.reset_index(drop=True, inplace=True)
 
-    print(f'Previous shape: {df.shape}\nCurrent shape:{df_clean.shape}\n Removed Duplicates: {len(df)-len(df_clean)}\n')
+    print(f'Full_dataset:\nPrevious shape: {df.shape}\nCurrent shape:{df_clean.shape}\n Removed Duplicates: {len(df)-len(df_clean)}\n')
 
     #######################################################
     ############# Pass the Data Into JSON #################
